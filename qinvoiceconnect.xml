@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="2.5" method="upgrade" group="hikashop">
+	<name>Qinvoice Connect: Create an invoice for every webshop order</name>
+	<creationDate>{__DAY__} {__MONTH__} {__YEAR__}</creationDate>
+	<version>{__PLUGIN_VERSION__}</version>
+	<author>Casper Mekel</author>
+	<authorEmail>casper@q-invoice.com</authorEmail>
+	<authorUrl>http://www.q-invoice.com</authorUrl>
+	<copyright>Copyright (C) 2013-{__YEAR__} q-invoice.com - All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<version>1.0.3</version>
+	 <description><![CDATA[
+    	Process orders and create invoices via q-invoice.com. More info at <a href="http://www.q-invoice.com" target="_blank">www.q-invoice.com</a>. For support: info@q-invoice.com or call +31 70 220 62 33.
+    ]]>
+    </description>
+	<files>
+		<filename plugin="qinvoiceconnect">qinvoiceconnect.php</filename>
+		<folder>qinvoiceconnect</folder>
+		<filename>qinvoiceconnect.xml</filename>
+	</files>
+	<params addpath="/components/com_hikashop/params">
+		<param name="api_url" type="text" label="API url" description="i.e. https://app.q-invoice.com/api/xml/1.1/" default="https://app.q-invoice.com/api/xml/1.1/"/>
+		<param name="api_username" type="text" label="API username" description="Your API Username" default=""/>
+		<param name="api_password" type="password" label="API password" description="Your API Password" default=""/>
+		
+		<param name="layout_code" type="text" label="Layout code" description="Optional: Your layout code"/>
+		<param name="invoice_remark" type="text" label="Invoice remark" description="This remark will be shown on the invoice" default="Thank you for your order: #{order_id}"/>
+		<param name="paid_remark" type="text" label="Paid remark" description="Only shown if the order has been paid" default="Your payment has been received."/>
+		
+		<param name="invoice_tag" type="text" label="Invoice tag" description="A tag to be added to the invoice, i.e. your webshop name" default=""/>
+
+		<param name="ledger_account" type="text" label="Ledger account" description="Your default ledger account" default="8000"/>
+		
+		<param name="discount_vat_percentage" type="text" label="Discount VAT %" description="Set the VAT to be calculated over discounts (without %)" default="21"/>
+
+		<param name="calculation_method" type="list" default="" label="Preferred calculation method" description="Which type of prices should be leading?">
+  					<option value="excl">With VAT excluded</option>
+  					<option value="incl">With VAT included</option>
+				</param>
+
+		<param name="invoice_trigger" type="list" default="" label="Send invoice request on" description="When to send the request to q-invoice">
+				<option value="created">On every new order</option>
+				<option value="confirmed">When order is confirmed</option>
+				<option value="shipped">When order is shipped</option>
+		</param>
+
+		<param name="invoice_action" type="list" default="" label="After request" description="How should we handle the request.">
+				<option value="0">Save invoice as draft</option>
+				<option value="1">Finalize invoice but don't send</option>
+				<option value="2">Finalize and send to customer</option>
+		</param>
+
+		<param name="save_relation" type="list" default="" label="Save relation" description="Save the customer details in address book">
+				<option value="0">Don't save</option>
+				<option value="1">Save or update details</option>
+		</param>
+	</params>
+	<config>
+		<fields name="params" addfieldpath="/components/com_hikashop/fields">
+			<fieldset name="basic">
+				<field name="api_url" type="text" label="API url" description="i.e. https://app.q-invoice.com/api/xml/1.1/" default="https://app.q-invoice.com/api/xml/1.1/"/>
+				<field name="api_username" type="text" label="API username" description="Your API Username" default=""/>
+				<field name="api_password" type="password" label="API password" description="Your API Password" default=""/>
+				
+				<field name="layout_code" type="text" label="Layout code" description="Optional: Your layout code"/>
+				<field name="invoice_remark" type="textarea" label="Invoice remark" description="This remark will be shown on the invoice" default="Thank you for your order: #{order_id}"/>
+				<field name="paid_remark" type="text" label="Paid remark" description="Only shown if the order has been paid" default="Your payment has been received."/>
+				
+				<field name="invoice_tag" type="text" label="Invoice tag" description="A tag to be added to the invoice, i.e. your webshop name" default=""/>
+
+				<field name="ledger_account" type="text" label="Ledger account" description="Your default ledger account" default="8000"/>
+
+				<field name="discount_vat_percentage" type="text" label="Discount VAT %" description="Set the VAT to be calculated over discounts (without %)" default="21"/>
+
+				<field name="calculation_method" type="list" default="" label="Preferred calculation method" description="Which type of prices should be leading?">
+  					<option value="excl">With VAT excluded</option>
+  					<option value="incl">With VAT included</option>
+				</field>
+
+				<field name="invoice_trigger" type="list" default="" label="Send invoice request on" description="When to send the request to q-invoice">
+  					<option value="created">On every new order</option>
+  					<option value="confirmed">When order is confirmed (paid)</option>
+  					<option value="shipped">When order is shipped</option>
+				</field>
+
+				<field name="invoice_action" type="list" default="" label="After request" description="How should we handle the request.">
+  					<option value="0">Save invoice as draft</option>
+  					<option value="1">Finalize invoice but don't send</option>
+  					<option value="2">Finalize and send to customer</option>
+				</field>
+
+				<field name="save_relation" type="list" default="" label="Save relation" description="Save the customer details in address book">
+  					<option value="0">Don't save</option>
+  					<option value="1">Save or update details</option>
+				</field>
+			
+			</fieldset>
+		</fields>
+	</config>
+</extension>
